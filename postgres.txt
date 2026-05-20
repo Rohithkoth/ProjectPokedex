@@ -1,0 +1,11 @@
+postgres:
+user:postgres
+pass:projectpokedex
+
+export PATH="$PATH:/c/Program\ Files/PostgreSQL/18/bin"
+
+# Connect to postgres and drop the old database
+PGPASSWORD=projectpokedex psql -U postgres -c "DROP DATABASE starter_db;"
+
+# Recreate it fresh
+PGPASSWORD=projectpokedex psql -U postgres -c "CREATE DATABASE starter_db;"

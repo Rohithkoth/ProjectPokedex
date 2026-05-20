@@ -1,0 +1,19 @@
+Here's your skeleton. Here's a summary of what's in each file and the order to tackle them:
+
+Build order:
+1. Pokemon.java — Add annotations to every field (@Id, @Column, @Type), write the no-args constructor, then use your IDE to auto-generate all getters and setters. This is the foundation — nothing else works until this is right.
+2. PokemonSearchCriteria.java — Declare all the filter fields and generate getters/setters. Simple class, good warmup.
+3. PokemonDTO.java — Write both inner classes (Summary and Detail). The mapping constructors are the key part — they translate a Pokemon entity into what the frontend actually receives.
+4. PokemonRepository.java — Fill in the four @Query SQL strings. The comments explain the exact SQL syntax for each one, including the ANY() and ?? tricks for Postgres arrays and JSONB.
+5. PokemonService.java — Implement the two methods. Both follow the same pattern: call repository → convert to DTO → return.
+6. PokemonController.java — Wire up the two endpoints and the error handler. Thinnest layer — mostly annotations and one-liners.
+
+When it's running, test it like this:
+# Single Pokémon
+GET http://localhost:8080/api/pokemon/charizard
+
+# Search with filters
+GET http://localhost:8080/api/pokemon/search?type=fire&generation=1
+GET http://localhost:8080/api/pokemon/search?legendary=true
+GET http://localhost:8080/api/pokemon/search?hiddenMove=surf&baseFormOnly=true
+GET http://localhost:8080/api/pokemon/search   ← returns everything

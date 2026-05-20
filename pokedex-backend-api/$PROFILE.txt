@@ -1,0 +1,1 @@
+$env:Path += ";C:\Users\rohithkodev\Downloads\apache-maven-3.9.15-bin\apache-maven-3.9.15\bin"

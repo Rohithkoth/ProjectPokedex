@@ -1,0 +1,41 @@
+Here's your frontend skeleton. Here's the full structure and build order:
+
+Project structure:
+pokedex-frontend/
+├── index.html
+├── package.json
+├── vite.config.js          ← proxy to Spring Boot
+└── src/
+    ├── main.jsx            ← entry point
+    ├── App.jsx             ← root component
+    ├── index.css           ← global styles + CSS variables
+    ├── api/
+    │   └── index.js        ← all API calls live here
+    ├── hooks/
+    │   └── usePokemon.js   ← data fetching + filter state
+    ├── components/
+    │   ├── PokemonCard.jsx        ← single card
+    │   ├── PokemonCard.module.css
+    │   ├── PokemonGrid.jsx        ← grid of cards
+    │   ├── PokemonGrid.module.css
+    │   ├── FilterPanel.jsx        ← filter controls
+    │   └── FilterPanel.module.css
+    └── pages/
+        ├── PokedexPage.jsx        ← main page layout
+        └── PokedexPage.module.css
+
+Build order — same principle as the backend, build bottom up:
+
+api/index.js — already done, no changes needed
+hooks/usePokemon.js — state and data fetching
+components/PokemonCard.jsx + CSS — the smallest unit
+components/PokemonGrid.jsx + CSS — renders the cards
+components/FilterPanel.jsx + CSS — the filter controls
+pages/PokedexPage.jsx + CSS — wires everything together
+App.jsx — just renders the page
+
+To run once you've filled it in:
+bashcd pokedex-frontend
+npm install
+npm run dev
+Then open http://localhost:5173 — make sure the Spring Boot API is running first!
