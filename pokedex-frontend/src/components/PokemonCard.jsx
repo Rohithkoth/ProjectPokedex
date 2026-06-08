@@ -1,7 +1,7 @@
 // =============================================================
 //  components/PokemonCard.jsx — Individual Pokémon Card
 // =============================================================
-//
+
 //  THE DATA THIS CARD RECEIVES (PokemonDTO.Summary):
 //  {
 //    id, baseId, formId,
@@ -13,6 +13,8 @@
 // =============================================================
 
 import styles from './PokemonCard.module.css'
+import { useNavigate } from 'react-router-dom'
+
 
 // ── TYPE COLORS ────────────────────────────────────────────────
 // Maps each Pokémon type to a color for the type badge.
@@ -38,13 +40,51 @@ const TYPE_COLORS = {
 }
 
 //Build the component function ──────────────────────
-function PokemonCard({ pokemon }) {
-  return (
-    <div className={styles.card}>
+//   ── Required ──────────────────────────────────────────────
+//   pokemon.baseId    → the Pokédex number e.g. #006
+//   pokemon.name      → the display name e.g. "Charizard"
+//   pokemon.formName  → form label if not null e.g. "Mega Charizard X"
+//   pokemon.type1     → first type badge
+//   pokemon.type2     → second type badge (only if not null)
+//   pokemon.generation → e.g. "Gen 1"
+//
+//   ── Special badges (only show if true) ───────────────────
+//   pokemon.isLegendary  → show "Legendary" badge
+//   pokemon.isMythical   → show "Mythical" badge
+//   pokemon.isMega       → show "Mega" badge
+//   pokemon.isParadox    → show "Paradox" badge
+//   pokemon.hasGigantamax → show "Gigantamax" badge
 
-      {/* Pokédex number — padStart turns 6 into "006" */}
+
+const buildImagePath = (pokemon) => {
+  const base = String(pokemon.baseId).padStart(4, '0')
+  const form = String(pokemon.formId).padStart(3, '0')
+  const gender = pokemon.gender1 || 'uk'
+
+  if (pokemon.formName === 'Gigantamax Form') {
+    const gmaxForm = pokemon.slug === 'urshifu-rapid-strike-gmax' ? '001' : '000'
+    const gmaxGender = pokemon.gender1 === 'uk' ? 'uk' : 'mf'
+    return `/img/pokemon/${base}_${gmaxForm}_${gmaxGender}_g.png`  // ← gmaxGender not gender
+  }
+  return `/img/pokemon/${base}_${form}_${gender}_n.png`
+}
+
+function PokemonCard({ pokemon, isCaught, onToggleCaught }) {
+  const navigate = useNavigate()
+  return (
+    <div className={styles.card} onClick={() => navigate(`/pokemon/${pokemon.slug}`)}>
+
+      {/* Pokémon sprite image */}
+      <img
+        className={styles.sprite}
+        src={buildImagePath(pokemon)}
+        alt={pokemon.name}
+        onError={e => { e.target.style.display = 'none' }}
+      />
+
+      {/* Pokédex number — padStart turns 6 into "0006" */}
       <span className={styles.number}>
-        #{String(pokemon.baseId).padStart(3, '0')}
+        #{String(pokemon.baseId).padStart(4, '0')}
       </span>
 
       {/* Name */}
@@ -84,12 +124,21 @@ function PokemonCard({ pokemon }) {
         {pokemon.isMythical && <span className={styles.flag}>Mythical</span>}
         {pokemon.isMega && <span className={styles.flag}>Mega</span>}
         {pokemon.isParadox && <span className={styles.flag}>Paradox</span>}
-        {pokemon.hasGigantamax && <span className={styles.flag}>Gigantamax</span>}
+        {pokemon.formName === 'Gigantamax Form' && <span className={styles.flag}>Gigantamax</span>}
       </div>
-
+      {/* Caught toggle — Pokéball button */}
+      <button
+        className={`${styles.caughtBtn} ${isCaught ? styles.caught : styles.uncaught}`}
+        onClick={e => { e.stopPropagation(); onToggleCaught(pokemon.id) }}
+        title={isCaught ? 'Mark as not caught' : 'Mark as caught'}
+      >
+        <span className={styles.pokeballIcon}>{isCaught ? '🟢' : '⚪'}</span>
+        <span className={styles.caughtText}>{isCaught ? 'Caught' : 'Not caught'}</span>
+      </button>
     </div>
   )
 }
 
 //Export the component ──────────────────────────────
 export default PokemonCard
+

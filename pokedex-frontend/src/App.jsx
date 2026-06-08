@@ -1,16 +1,24 @@
 // =============================================================
 //  App.jsx — Root Component
 // =============================================================
-//
-//  WHAT THIS FILE IS:
-// =============================================================
 
 import PokedexPage from './pages/PokedexPage'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import LandingPage from './pages/LandingPage'
+import PokemonDetailPage from './pages/PokemonDetailPage'
 
-// Build the App component ───────────────────────────
+// import PokedexPage from './pages/PokedexPage'
 //
 function App() {
-  return <PokedexPage />
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/dex/:groupKey" element={<PokedexPage />} />
+        <Route path="/pokemon/:slug" element={<PokemonDetailPage />} />  {/* ← ADD */}
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App

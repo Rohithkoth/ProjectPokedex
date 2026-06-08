@@ -5,17 +5,6 @@ import com.pokedex.model.Pokemon;
 // =============================================================
 //  PokemonDTO.java  — Data Transfer Objects
 // =============================================================
-//
-//  WHAT THIS FILE IS:
-//  DTOs control exactly what data gets sent back in API responses.
-//  We never return the raw Pokemon entity directly from a controller
-//  because:
-//    1. It can expose internal fields you don't want to send
-//    2. You might want different shapes for different endpoints
-//    3. Raw entities can cause issues with JPA lazy loading
-//
-//  WE HAVE TWO DTOs:
-//
 //  PokemonDTO.Summary  — lightweight, used in LIST responses
 //    The React frontend will use this to render a grid/list of
 //    Pokémon cards. Only includes the fields needed for a card:
@@ -24,7 +13,6 @@ import com.pokedex.model.Pokemon;
 //  PokemonDTO.Detail   — full data, used in SINGLE Pokémon responses
 //    The React frontend will use this to render a full Pokémon
 //    profile page with all stats, moves, egg groups, etc.
-//
 // =============================================================
 
 public class PokemonDTO {
@@ -34,9 +22,8 @@ public class PokemonDTO {
     // Used for: GET /api/pokemon/search (list of results)
     // =========================================================
     public static class Summary {
-        //  Declare fields ────────────────────────────
-        // These flags let the frontend show special icons/badges on cards.
-        //
+
+        // Declare fields ────────────────────────────
         private Long id;
         private Integer baseId;
         private Integer formId;
@@ -52,13 +39,23 @@ public class PokemonDTO {
         private Boolean isMega;
         private Boolean isParadox;
         private Boolean hasGigantamax;
+        private String gender1;
+        private String dexKey;
 
-        //No-args constructor ───────────────────────    
-        //
+        private Integer height;
+        private Integer weight;
+        private Integer hp;
+        private Integer attack;
+        private Integer defense;
+        private Integer spAtk;
+        private Integer spDef;
+        private Integer speed;
+
+        // No-args constructor ───────────────────────
         public Summary() {
         }
 
-        //Mapping constructor ───────────────────────
+        // Mapping constructor ───────────────────────
         public Summary(Pokemon p) {
             this.id = p.getId();
             this.baseId = p.getBaseId();
@@ -75,9 +72,18 @@ public class PokemonDTO {
             this.isMega = p.getIsMega();
             this.isParadox = p.getIsParadox();
             this.hasGigantamax = p.getHasGigantamax();
+            this.gender1 = p.getGender1();
+            this.height = p.getHeight();
+            this.weight = p.getWeight();
+            this.hp = p.getHp();
+            this.attack = p.getAttack();
+            this.defense = p.getDefense();
+            this.spAtk = p.getSpAtk();
+            this.spDef = p.getSpDef();
+            this.speed = p.getSpeed();
         }
 
-        //Getters ───────────────────────────────────
+        // Getters ───────────────────────────────────
         public Long getId() {
             return id;
         }
@@ -138,16 +144,57 @@ public class PokemonDTO {
             return hasGigantamax;
         }
 
+        public String getGender1() {
+            return gender1;
+        }
+
+        public String getDexKey() {
+            return dexKey;
+        }
+
+        public void setDexKey(String dexKey) {
+            this.dexKey = dexKey;
+        }
+
+        public Integer getHeight() {
+            return height;
+        }
+
+        public Integer getWeight() {
+            return weight;
+        }
+
+        public Integer getHp() {
+            return hp;
+        }
+
+        public Integer getAttack() {
+            return attack;
+        }
+
+        public Integer getDefense() {
+            return defense;
+        }
+
+        public Integer getSpAtk() {
+            return spAtk;
+        }
+
+        public Integer getSpDef() {
+            return spDef;
+        }
+
+        public Integer getSpeed() {
+            return speed;
+        }
     }
 
     // =========================================================
     // INNER CLASS 2: Detail
-    // Used for: GET /api/pokemon/{slug} (single Pokémon)
     // =========================================================
     public static class Detail {
 
         // Declare fields ────────────────────────────
-        //
         private Long id;
         private Integer baseId;
         private Integer formId;
@@ -176,14 +223,21 @@ public class PokemonDTO {
         private String hiddenMoves; // ← raw JSON string e.g. {"surf":[1,2,3]}
         private Boolean isBattleOnly;
         private Boolean isSublegendary;
+        private Integer height;
+        private Integer weight;
+        private Integer hp;
+        private Integer attack;
+        private Integer defense;
+        private Integer spAtk;
+        private Integer spDef;
+        private Integer speed;
 
         // No-args constructor ───────────────────────
-        //
+
         public Detail() {
         }
 
         // Mapping constructor ───────────────────────
-        //
         //
         public Detail(Pokemon p) {
             // Summary fields
@@ -215,9 +269,17 @@ public class PokemonDTO {
             this.hiddenMoves = p.getHiddenMoves();
             this.isBattleOnly = p.getIsBattleOnly();
             this.isSublegendary = p.getIsSublegendary();
+            this.height = p.getHeight();
+            this.weight = p.getWeight();
+            this.hp = p.getHp();
+            this.attack = p.getAttack();
+            this.defense = p.getDefense();
+            this.spAtk = p.getSpAtk();
+            this.spDef = p.getSpDef();
+            this.speed = p.getSpeed();
         }
 
-        //Getters ───────────────────────────────────
+        // Getters ───────────────────────────────────
         public Long getId() {
             return id;
         }
@@ -320,6 +382,39 @@ public class PokemonDTO {
 
         public Boolean getIsSublegendary() {
             return isSublegendary;
+        }
+
+        // Getters:
+        public Integer getHeight() {
+            return height;
+        }
+
+        public Integer getWeight() {
+            return weight;
+        }
+
+        public Integer getHp() {
+            return hp;
+        }
+
+        public Integer getAttack() {
+            return attack;
+        }
+
+        public Integer getDefense() {
+            return defense;
+        }
+
+        public Integer getSpAtk() {
+            return spAtk;
+        }
+
+        public Integer getSpDef() {
+            return spDef;
+        }
+
+        public Integer getSpeed() {
+            return speed;
         }
     }
 }

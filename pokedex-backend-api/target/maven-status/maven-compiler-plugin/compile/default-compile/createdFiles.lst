@@ -1,0 +1,10 @@
+com\pokedex\dto\PokemonDTO$Detail.class
+com\pokedex\repository\PokemonRepository.class
+com\pokedex\dto\PokemonDTO$Summary.class
+com\pokedex\model\Pokemon.class
+com\pokedex\dto\PokemonSearchCriteria.class
+com\pokedex\dto\PokemonDTO.class
+com\pokedex\config\SwaggerConfig.class
+com\pokedex\Application.class
+com\pokedex\controller\PokemonController.class
+com\pokedex\service\PokemonService.class

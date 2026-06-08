@@ -2,8 +2,7 @@
    FilterPanel.module.css
 ============================================================= */
 
-/* ── Panel container ─────────────────────────────────────────
-*/
+/* ── Panel container ─────────────────────────────────────────*/
 .panel {
    background: var(--surface);
    border-right: 1px solid var(--border);
@@ -13,23 +12,20 @@
    overflow-y: auto;
 }
 
-/* ── Header row (title + clear button) ───────────────────────
-*/
+/* ── Header row (title + clear button) ───────────────────────*/
 .header {
    display: flex;
    justify-content: space-between;
 }
 
-/* ── Panel title ─────────────────────────────────────────────
-*/
+/* ── Panel title ─────────────────────────────────────────────*/
 .title {
    font-family: var(--font-display);
    font-size: 1.8rem;
    letter-spacing: 0.05em;
 }
 
-/* ── Clear all button ────────────────────────────────────────
-*/
+/* ── Clear all button ────────────────────────────────────────*/
 .clearBtn {
    background: none;
    border: none;
@@ -41,11 +37,10 @@
 }
 
 .clearBtn:hover {
-  color: var(--accent);
+   color: var(--accent);
 }
 
-/* ── Filter group (label + input) ────────────────────────────
-*/
+/* ── Filter group (label + input) ────────────────────────────*/
 .group {
    display: flex;
    flex-direction: column;
@@ -54,8 +49,7 @@
 
 }
 
-/* ── Filter label ────────────────────────────────────────────
-*/
+/* ── Filter label ────────────────────────────────────────────*/
 .label {
    font-size: 0.7rem;
    text-transform: uppercase;
@@ -64,8 +58,7 @@
 
 }
 
-/* ── Text/number inputs ──────────────────────────────────────
-*/
+/* ── Text/number inputs ──────────────────────────────────────*/
 .input {
    width: 100%;
    background: var(--surface-2);
@@ -76,14 +69,13 @@
    font-size: 0.9rem;
 
    &:focus {
-     outline: none;
-     border-color: var(--accent);
+      outline: none;
+      border-color: var(--accent);
    }
 
 }
 
-/* ── Checkbox label row ──────────────────────────────────────
-*/
+/* ── Checkbox label row ──────────────────────────────────────*/
 .checkLabel {
    display: flex;
    align-items: center;
@@ -93,4 +85,90 @@
    font-size: 0.9rem;
    margin-top: 0.75rem;
 
+}
+
+/* ── Mode toggle row (AND/OR radio buttons) ──────────────────*/
+.modeToggle {
+   display: flex;
+   flex-direction: column;
+   gap: 0.3rem;
+   margin-bottom: 0.5rem;
+}
+
+/* ── Radio button label ──────────────────────────────────────*/
+.radioLabel {
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+   cursor: pointer;
+   color: var(--text);
+   font-size: 0.85rem;
+}
+
+/* ── Grid of type chip checkboxes ────────────────────────────*/
+.typeGrid {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 0.3rem;
+}
+
+/* ── Individual type chip ────────────────────────────────────*/
+.typeChip {
+   display: flex;
+   align-items: center;
+   gap: 0.3rem;
+   font-size: 0.75rem;
+   cursor: pointer;
+   color: var(--text);
+   text-transform: capitalize;
+}
+
+/* ── Hint text below AND type filter ─────────────────────────*/
+.hint {
+   font-size: 0.7rem;
+   color: var(--text-muted);
+   font-style: italic;
+   margin-top: 0.3rem;
+}
+
+/* ── Special/Forms dropdown group ───────────────────────────*/
+.dropdownGroup {
+   display: flex;
+   flex-direction: column;
+   gap: 0.4rem;
+   padding: 0.5rem;
+   background: var(--surface-2);
+   border: 1px solid var(--border);
+   border-radius: var(--radius);
+}
+
+.caughtToggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.caughtOption {
+  width: 100%;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 150ms ease, color 150ms ease, background 150ms ease;
+}
+
+.caughtOption:hover {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.caughtOptionActive {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(var(--accent-rgb, 220, 38, 38), 0.08);
 }

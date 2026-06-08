@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict afVXjPvriuVYR74EuETNcdh257kbU6uobEJu46N57e3sJGEdUROhpAVuSNV8bnE
+\restrict DKNFpK30h796nOqXXi0FSo7m4m1MjDNjyNn5pweeU01re1Nna2hhCgw8sfSVs7K
 
 -- Dumped from database version 18.3
 -- Dumped by pg_dump version 18.3
@@ -1556,6 +1556,38 @@ COPY public.pokemon (id, base_id, form_id, slug, name, form_name, type1, type2, 
 1386	1024	1	terapagos-terastal	Terapagos	Terastal Form	normal	\N	undiscovered	\N	mf	\N	4	blue	Slow	1	9	[]	{}	f	f	f	t	f	f	f
 1387	1024	2	terapagos-stellar	Terapagos	Stellar Form	normal	\N	undiscovered	\N	mf	\N	4	blue	Slow	1	9	[]	{}	f	t	f	t	f	f	f
 1388	1025	0	pecharunt	Pecharunt	\N	poison	ghost	undiscovered	\N	uk	\N	-1	purple	Slow	1	9	[]	{}	f	f	f	f	t	f	f
+1389	3	2	venusaur-gmax	Venusaur	Gigantamax Form	grass	poison	monster	grass	fd	md	1	green	Medium Slow	5	1	[]	{"cut": [1, 2, 3, 4, 5, 6], "flash": [2, 3], "strength": [3, 4, 5, 6], "rock_climb": [4], "rock_smash": [3, 4, 6]}	f	f	t	f	f	f	f
+1420	892	2	urshifu-gmax	Urshifu	Gigantamax Form	fighting	dark	undiscovered	\N	mf	\N	1	gray	Slow	11	8	[]	{}	f	f	t	f	f	t	f
+1390	6	3	charizard-gmax	Charizard	Gigantamax Form	fire	flying	monster	dragon	mf	\N	1	red	Medium Slow	10	1	[]	{"cut": [1, 2, 3, 4, 5, 6], "fly": [2, 3, 4, 5, 6], "defog": [4], "strength": [1, 2, 3, 4, 5, 6], "rock_smash": [3, 4, 6]}	f	f	t	f	f	f	f
+1391	9	2	blastoise-gmax	Blastoise	Gigantamax Form	water	\N	monster	water_1	mf	\N	1	blue	Medium Slow	10	1	[]	{"dive": [3, 5, 6], "surf": [1, 2, 3, 4, 5, 6], "strength": [1, 2, 3, 4, 5, 6], "waterfall": [2, 3, 4, 5, 6], "whirlpool": [2, 4], "rock_climb": [4], "rock_smash": [3, 4, 6]}	f	f	t	f	f	f	f
+1392	12	1	butterfree-gmax	Butterfree	Gigantamax Form	bug	flying	bug	\N	fd	md	4	white	Medium Fast	6	1	[]	{"defog": [4], "flash": [2, 3]}	f	f	t	f	f	f	f
+1393	25	1	pikachu-gmax	Pikachu	Gigantamax Form	electric	\N	field	fairy	fd	md	4	yellow	Medium Fast	5	1	[[26, 0], [26, 1]]	{"flash": [1, 2, 3], "strength": [2, 3, 4, 5, 6], "rock_smash": [3, 4, 6]}	f	f	t	f	f	f	f
+1394	52	3	meowth-gmax	Meowth	Gigantamax Form	normal	\N	field	\N	mf	\N	4	yellow	Medium Fast	5	1	[[53, 0]]	{"cut": [3, 4, 5, 6], "flash": [3]}	f	f	t	f	f	f	f
+1395	68	1	machamp-gmax	Machamp	Gigantamax Form	fighting	\N	human_like	\N	mf	\N	2	gray	Medium Slow	11	1	[]	{"strength": [1, 2, 3, 4, 5, 6], "rock_climb": [4], "rock_smash": [3, 4, 6]}	f	f	t	f	f	f	f
+1396	94	2	gengar-gmax	Gengar	Gigantamax Form	ghost	poison	amorphous	\N	mf	\N	4	purple	Medium Slow	10	1	[]	{"strength": [1, 2, 3, 4, 5, 6], "rock_smash": [3, 4, 6]}	f	f	t	f	f	f	f
+1397	99	1	kingler-gmax	Kingler	Gigantamax Form	water	\N	water_3	\N	mf	\N	4	red	Medium Fast	4	1	[]	{"cut": [1, 2, 3, 4, 5, 6], "dive": [3, 5, 6], "surf": [1, 2, 3, 4, 5, 6], "strength": [1, 2, 3, 4, 5, 6], "whirlpool": [2, 4], "rock_smash": [3, 4, 6]}	f	f	t	f	f	f	f
+1398	131	1	lapras-gmax	Lapras	Gigantamax Form	water	ice	monster	water_1	mf	\N	4	blue	Slow	3	1	[]	{"dive": [3, 5, 6], "surf": [1, 2, 3, 4, 5, 6], "strength": [1, 2, 3, 4, 5, 6], "waterfall": [3, 4, 5, 6], "whirlpool": [2, 4], "rock_smash": [3, 4, 6]}	f	f	t	f	f	f	f
+1399	133	1	eevee-gmax	Eevee	Gigantamax Form	normal	\N	field	\N	fd	md	1	brown	Medium Fast	5	1	[[134, 0], [135, 0], [136, 0], [196, 0], [197, 0], [470, 0], [471, 0], [700, 0]]	{}	f	f	t	f	f	f	f
+1400	143	1	snorlax-gmax	Snorlax	Gigantamax Form	normal	\N	monster	\N	mf	\N	1	black	Slow	11	1	[]	{"surf": [1, 2, 3, 4, 5, 6], "strength": [1, 2, 3, 4, 5, 6], "whirlpool": [4], "rock_climb": [4], "rock_smash": [4, 6]}	f	f	t	f	f	f	f
+1401	569	1	garbodor-gmax	Garbodor	Gigantamax Form	poison	\N	mineral	\N	mf	\N	4	green	Medium Fast	11	5	[]	{}	f	f	t	f	f	f	f
+1402	809	1	melmetal-gmax	Melmetal	Gigantamax Form	steel	\N	undiscovered	\N	uk	\N	-1	gray	Slow	11	7	[]	{}	f	f	t	f	t	f	f
+1403	812	1	rillaboom-gmax	Rillaboom	Gigantamax Form	grass	\N	field	grass	mf	\N	1	green	Medium Slow	11	8	[]	{}	f	f	t	f	f	f	f
+1404	815	1	cinderace-gmax	Cinderace	Gigantamax Form	fire	\N	field	human_like	mf	\N	1	white	Medium Slow	10	8	[]	{}	f	f	t	f	f	f	f
+1405	818	1	inteleon-gmax	Inteleon	Gigantamax Form	water	\N	water_1	field	mf	\N	1	blue	Medium Slow	10	8	[]	{}	f	f	t	f	f	f	f
+1406	823	1	corviknight-gmax	Corviknight	Gigantamax Form	flying	steel	flying	\N	mf	\N	4	purple	Medium Slow	12	8	[]	{}	f	f	t	f	f	f	f
+1407	826	1	orbeetle-gmax	Orbeetle	Gigantamax Form	bug	psychic	bug	\N	mf	\N	4	red	Medium Fast	12	8	[]	{}	f	f	t	f	f	f	f
+1408	834	1	drednaw-gmax	Drednaw	Gigantamax Form	water	rock	monster	water_1	mf	\N	4	green	Medium Fast	5	8	[]	{}	f	f	t	f	f	f	f
+1409	839	1	coalossal-gmax	Coalossal	Gigantamax Form	rock	fire	mineral	\N	mf	\N	4	black	Medium Slow	11	8	[]	{}	f	f	t	f	f	f	f
+1410	841	1	flapple-gmax	Flapple	Gigantamax Form	grass	dragon	grass	dragon	mf	\N	4	green	Erratic	12	8	[]	{}	f	f	t	f	f	f	f
+1411	842	1	appletun-gmax	Appletun	Gigantamax Form	grass	dragon	grass	dragon	mf	\N	4	green	Erratic	5	8	[]	{}	f	f	t	f	f	f	f
+1412	844	1	sandaconda-gmax	Sandaconda	Gigantamax Form	ground	\N	field	dragon	mf	\N	4	green	Medium Fast	13	8	[]	{}	f	f	t	f	f	f	f
+1413	849	2	toxtricity-gmax	Toxtricity	Gigantamax Form	electric	poison	human_like	\N	mf	\N	4	purple	Medium Slow	10	8	[]	{}	f	f	t	f	f	f	f
+1414	851	1	centiskorch-gmax	Centiskorch	Gigantamax Form	fire	bug	bug	\N	mf	\N	4	red	Medium Fast	8	8	[]	{}	f	f	t	f	f	f	f
+1415	858	1	hatterene-gmax	Hatterene	Gigantamax Form	psychic	fairy	fairy	\N	fo	\N	8	pink	Slow	9	8	[]	{}	f	f	t	f	f	f	f
+1416	861	1	grimmsnarl-gmax	Grimmsnarl	Gigantamax Form	dark	fairy	fairy	human_like	mo	\N	0	purple	Medium Fast	11	8	[]	{}	f	f	t	f	f	f	f
+1417	869	9	alcremie-gmax	Alcremie	Gigantamax Form	fairy	\N	fairy	amorphous	fo	\N	8	white	Medium Fast	9	8	[]	{}	f	f	t	f	f	f	f
+1418	879	1	copperajah-gmax	Copperajah	Gigantamax Form	steel	\N	field	mineral	mf	\N	4	green	Medium Fast	5	8	[]	{}	f	f	t	f	f	f	f
+1419	884	1	duraludon-gmax	Duraludon	Gigantamax Form	steel	dragon	mineral	dragon	mf	\N	4	white	Medium Fast	10	8	[[1018, 0]]	{}	f	f	t	f	f	f	f
 \.
 
 
@@ -1563,7 +1595,7 @@ COPY public.pokemon (id, base_id, form_id, slug, name, form_name, type1, type2, 
 -- Name: pokemon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.pokemon_id_seq', 1388, true);
+SELECT pg_catalog.setval('public.pokemon_id_seq', 1420, true);
 
 
 --
@@ -1643,5 +1675,5 @@ CREATE INDEX idx_pokemon_type2 ON public.pokemon USING btree (type2);
 -- PostgreSQL database dump complete
 --
 
-\unrestrict afVXjPvriuVYR74EuETNcdh257kbU6uobEJu46N57e3sJGEdUROhpAVuSNV8bnE
+\unrestrict DKNFpK30h796nOqXXi0FSo7m4m1MjDNjyNn5pweeU01re1Nna2hhCgw8sfSVs7K
 

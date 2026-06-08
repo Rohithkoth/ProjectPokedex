@@ -13,35 +13,45 @@
 //  - pokemon  → array of Summary DTOs from the API
 //  - loading  → boolean, true while API is fetching
 //  - error    → string error message or null
-//
-//  WHAT IS THE KEY PROP?
-//  When rendering a list with .map(), React needs a unique
-//  "key" on each item so it can efficiently update the DOM
-//  when the list changes. Always use a stable unique value
-//  like the database id — never use the array index.
 // =============================================================
 
 import PokemonCard from './PokemonCard'
 import styles from './PokemonGrid.module.css'
+import { useInfiniteScroll } from '../hooks/useInfiniteScroll'
 
-// Build the component ───────────────────────────────
-function PokemonGrid({ pokemon, loading, error }) {
-    //   Handle loading state first:
+function PokemonGrid({ pokemon, loading, error, caughtIds, onToggleCaught, loadMore, hasMore }) {
     if (loading) return <div className={styles.message}>Loading Pokémon...</div>
-    //   Handle error state:
     if (error) return <div className={styles.error}>{error}</div>
-    //   Handle empty results:
     if (pokemon.length === 0) return <div className={styles.message}>No Pokémon found.</div>
-    //   Otherwise render the grid:
+
+    const sentinelRef = useInfiniteScroll(loadMore, hasMore && !loading)
     return (
-        <div className={styles.grid}>
-            {pokemon.map(p => (
-                <PokemonCard key={p.id} pokemon={p} />
-            ))}
-        </div>
+        <>
+            <div className={styles.grid}>
+                {pokemon.map(p => (
+                    <PokemonCard
+                        key={p.id}
+                        pokemon={p}
+                        isCaught={caughtIds.has(p.id)}
+                        onToggleCaught={onToggleCaught}
+                    />
+                ))}
+            </div>
+
+            {/* Sentinel — triggers loadMore when visible */}
+            <div ref={sentinelRef} className={styles.sentinel} />
+
+            {loading && pokemon.length > 0 && (
+                <div className={styles.message}>Loading more...</div>
+            )}
+
+            {!hasMore && pokemon.length > 0 && (
+                <div className={styles.message}>All {pokemon.length} Pokémon loaded</div>
+            )}
+        </>
     )
+
 }
 
 
-//Export ─────────────────────────────────────────────
 export default PokemonGrid

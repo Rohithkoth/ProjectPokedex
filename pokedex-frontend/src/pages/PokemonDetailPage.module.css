@@ -1,0 +1,250 @@
+/* =============================================================
+   PokemonDetailPage.module.css
+============================================================= */
+
+.page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+.backBtn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.backBtn:hover {
+    color: var(--accent);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────*/
+.hero {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+}
+
+.spriteContainer {
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sprite {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+}
+
+.noSprite {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.heroInfo {
+    flex: 1;
+    padding-top: 0.5rem;
+}
+
+.number {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.name {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    margin-top: 0.25rem;
+    line-height: 1;
+}
+
+.formName {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.3rem;
+}
+
+.types {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.typeBadge {
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    text-transform: capitalize;
+}
+
+.quickStats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.quickStats span::after {
+    content: '•';
+    margin-left: 1rem;
+    opacity: 0.4;
+}
+
+.quickStats span:last-child::after {
+    content: '';
+}
+
+/* ── Sections ─────────────────────────────────────────────────*/
+.section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.sectionTitle {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+/* ── Info grid ────────────────────────────────────────────────*/
+.infoGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.infoRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.infoLabel {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    min-width: 120px;
+    padding-top: 0.1rem;
+}
+
+.infoValue {
+    font-size: 0.9rem;
+    color: var(--text);
+    text-transform: capitalize;
+}
+
+/* ── Flags ────────────────────────────────────────────────────*/
+.flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.flag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
+/* ── Hidden moves ─────────────────────────────────────────────*/
+.moveList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.move {
+    padding: 4px 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: var(--text);
+    text-transform: capitalize;
+}
+
+/* ── States ───────────────────────────────────────────────────*/
+.message {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 4rem;
+}
+
+.error {
+    text-align: center;
+    color: var(--accent);
+    padding: 4rem;
+}
+
+
+
+.statList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.statRow {
+  display: grid;
+  grid-template-columns: 80px 40px 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.statName {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+.statValue {
+  font-size: 0.85rem;
+  color: var(--text);
+  font-family: var(--font-mono);
+  text-align: right;
+}
+
+.statBarBg {
+  height: 8px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.statBarFill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 600ms ease;
+}

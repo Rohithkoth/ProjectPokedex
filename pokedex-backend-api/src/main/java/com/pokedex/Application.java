@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // =============================================================
 //  Application.java  — Entry point
 // =============================================================
-// =============================================================
 
 @SpringBootApplication
 public class Application {

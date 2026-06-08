@@ -7,6 +7,22 @@ import org.hibernate.annotations.Type;
 // =============================================================
 //  Pokemon.java  — The Entity (Model)
 // =============================================================
+//
+//  WHAT THIS FILE IS:
+//  A Java class that maps directly to the "pokemon" table in your
+//  PostgreSQL database. Each field below = one column in that table.
+//  Hibernate uses this class to read rows from the DB and turn them
+//  into Java objects your code can work with.
+//
+//  ANNOTATIONS REFERENCE:
+//  @Entity          — tells JPA "this class is a DB table"
+//  @Table           — tells JPA which table name to use
+//  @Id              — marks the primary key field
+//  @GeneratedValue  — tells JPA the DB auto-increments this column
+//  @Column          — maps a Java field to a specific DB column name
+//                     (needed when the Java name differs from DB name)
+//  @Type  — tells Hibernate to use a special type handler
+//           (needed for JSONB columns)
 // =============================================================
 
 @Entity
@@ -14,14 +30,11 @@ import org.hibernate.annotations.Type;
 public class Pokemon {
 
     // Primary Key ───────────────────────────────────
-    //
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Simple integer/string columns ─────────────────
-    //
-
+    // Simple integer/string columns ─────────────────
     @Column(name = "base_id")
     private Integer baseId;
     @Column(name = "form_id")
@@ -34,15 +47,19 @@ public class Pokemon {
     private Integer shape;
     private Integer generation;
 
-    //String columns with slightly different names ──
-
+    // String columns with slightly different names ──
     @Column(name = "experience_group")
     private String experienceGroup;
 
     @Column(name = "gender_ratio")
     private Integer genderRatio;
 
-// Flat type, egg group and gender columns ───────
+    //Flat type, egg group and gender columns ───────
+    //
+    // Since each Pokémon has at most 2 types, 2 egg groups, and
+    // 2 gender codes, we use plain String columns instead of arrays.
+    // type2, eggGroup2, and gender2 are nullable — they will be
+    // null when a Pokémon only has one value.
 
     // Types
     @Column(name = "type1")
@@ -63,7 +80,10 @@ public class Pokemon {
     private String gender2;
 
     // JSONB columns ─────────────────────────────────
-    //
+
+    // We store these as String for simplicity. The JSON content
+    // will come back as a raw string like: "[[2,0],[3,0]]"
+    // The React frontend can parse that with JSON.parse().
 
     @Type(JsonBinaryType.class)
     @Column(name = "evolution_ids", columnDefinition = "jsonb")
@@ -73,7 +93,7 @@ public class Pokemon {
     @Column(name = "hidden_moves", columnDefinition = "jsonb")
     private String hiddenMoves; // DB column: hidden_moves → e.g. {"surf":[1,2,3]}
 
-    //Boolean flag columns ─────────────────────────
+    // Boolean flag columns ─────────────────────────
     //
 
     @Column(name = "is_mega")
@@ -97,16 +117,31 @@ public class Pokemon {
     @Column(name = "is_paradox")
     private Boolean isParadox;
 
+    // height weight
+    @Column(name = "height")
+    private Integer height;
+    @Column(name = "weight")
+    private Integer weight;
+
+    // stats
+    @Column(name = "hp")
+    private Integer hp;
+    @Column(name = "attack")
+    private Integer attack;
+    @Column(name = "defense")
+    private Integer defense;
+    @Column(name = "sp_atk")
+    private Integer spAtk;
+    @Column(name = "sp_def")
+    private Integer spDef;
+    @Column(name = "speed")
+    private Integer speed;
+
     //No-args constructor ───────────────────────────
-    //
-
-
     public Pokemon() {
     }
 
     //Getters and Setters ───────────────────────────
-    //
-
     public Long getId() {
         return id;
     }
@@ -195,7 +230,6 @@ public class Pokemon {
         this.genderRatio = genderRatio;
     }
 
-    //  type1 and type2
     public String getType1() {
         return type1;
     }
@@ -212,7 +246,6 @@ public class Pokemon {
         this.type2 = type2;
     }
 
-    //  egg groups
     public String getEggGroup1() {
         return eggGroup1;
     }
@@ -229,7 +262,6 @@ public class Pokemon {
         this.eggGroup2 = eggGroup2;
     }
 
-    // gender
     public String getGender1() {
         return gender1;
     }
@@ -316,6 +348,38 @@ public class Pokemon {
 
     public void setIsParadox(Boolean isParadox) {
         this.isParadox = isParadox;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public Integer getHp() {
+        return hp;
+    }
+
+    public Integer getAttack() {
+        return attack;
+    }
+
+    public Integer getDefense() {
+        return defense;
+    }
+
+    public Integer getSpAtk() {
+        return spAtk;
+    }
+
+    public Integer getSpDef() {
+        return spDef;
+    }
+
+    public Integer getSpeed() {
+        return speed;
     }
 
 }

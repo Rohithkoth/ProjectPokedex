@@ -1,80 +1,135 @@
 // =============================================================
-//  pages/PokedexPage.jsx — Main Page
-// =============================================================
-//
-//  WHAT THIS FILE IS:
-//  The top-level page component that composes everything together.
-//  It uses the usePokemon hook to get data and state, then passes
-//  that data down to the FilterPanel and PokemonGrid components.
-//
-//  THIS IS WHERE THE LAYOUT LIVES:
-//  The page controls the overall structure — sidebar on the left,
-//  main content area on the right. Components just fill their slot.
-//
-//  In this page:
-//    PokedexPage (owns all state via usePokemon)
-//      ├── FilterPanel receives: filters, setFilters, clearFilters
-//      │     └── When user changes a filter, calls setFilters
-//      │           → usePokemon re-fetches → pokemon updates
-//      │                 → PokemonGrid re-renders with new data
-//      └── PokemonGrid receives: pokemon, loading, error
-//
-//
-//  RESULT COUNT:
-//  Show the number of results above the grid.
-//  pokemon.length gives you the count.
+//  pages/PokedexPage.jsx — Main Pokédex Page
 // =============================================================
 
+import { useParams, useNavigate } from 'react-router-dom'
 import { usePokemon } from '../hooks/usePokemon'
 import FilterPanel from '../components/FilterPanel'
 import PokemonGrid from '../components/PokemonGrid'
+import PokemonCard from '../components/PokemonCard'
+import DEX_GROUPS from '../dexGroups'
 import styles from './PokedexPage.module.css'
+import NameSearchBar from '../components/NameSearchBar'
 
-// Build the page component ──────────────────────────
-//
+// ── Sectioned grid with dividers ──────────────────────────────
+function SectionedGrid({ group, pokemon, loading, error, caughtIds, onToggleCaught }) {
+  if (loading) return <div className={styles.message}>Loading Pokémon...</div>
+  if (error) return <div className={styles.error}>{error}</div>
+  if (pokemon.length === 0) return <div className={styles.message}>No Pokémon found.</div>
+
+  return (
+    <div>
+      {group.sections.map((section, idx) => {
+        // Filter pokemon belonging to this section by dexKey
+        const sectionPokemon = pokemon.filter(p =>
+          section.dexKeys.includes(p.dexKey)
+        )
+
+        if (sectionPokemon.length === 0) return null
+
+        return (
+          <div key={idx} className={styles.section}>
+            <div className={styles.divider}>
+              <span className={styles.dividerLabel}>{section.label}</span>
+            </div>
+            <div className={styles.grid}>
+              {sectionPokemon.map(p => (
+                <PokemonCard
+                  key={p.id}
+                  pokemon={p}
+                  isCaught={caughtIds.has(p.id)}
+                  onToggleCaught={onToggleCaught}
+                />
+              ))}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+// ── Main page ─────────────────────────────────────────────────
 function PokedexPage() {
-  //
-  //Call the hook to get everything you need
-  const { pokemon, loading, error, filters, setFilters, clearFilters } = usePokemon()
-  //
-  //Return the layout JSX:
+  const { groupKey } = useParams()
+  const navigate = useNavigate()
+  const group = DEX_GROUPS.find(g => g.key === groupKey)
+
+  const {
+    pokemon,
+    loading,
+    error,
+    filters,
+    setFilters,
+    clearFilters,
+    caughtIds,
+    handleToggleCaught,
+    loadMore,
+    hasMore,
+    nameQuery,
+    setNameQuery,
+    caughtFilter,
+    setCaughtFilter,
+  } = usePokemon(groupKey)
+
+  const isMultiSection = group && group.sections.length > 1
+
   return (
     <div className={styles.page}>
 
-      {/* Sidebar */}
       <aside className={styles.sidebar}>
         <FilterPanel
           filters={filters}
           setFilters={setFilters}
           clearFilters={clearFilters}
+          caughtFilter={caughtFilter}      //CATCH STATUS FILTER
+          setCaughtFilter={setCaughtFilter}
         />
       </aside>
 
-      {/* Main content */}
       <main className={styles.main}>
 
-        {/* Header */}
         <div className={styles.header}>
-          <h1 className={styles.title}>Pokédex</h1>
-          {!loading && (
-            <span className={styles.count}>
-              {pokemon.length} Pokémon
-            </span>
-          )}
+          <div className={styles.headerMeta}>
+            <button className={styles.backBtn} onClick={() => navigate('/')}>
+              ← Games
+            </button>
+            {!loading && (
+              <span className={styles.count}>
+                {pokemon.length} Pokémon — {pokemon.filter(p => caughtIds.has(p.id)).length} caught
+              </span>
+            )}
+          </div>
+          <h1 className={styles.title}>
+            {group ? group.name : groupKey}
+          </h1>
         </div>
 
-        {/* Grid */}
-        <PokemonGrid
-          pokemon={pokemon}
-          loading={loading}
-          error={error}
-        />
+        <NameSearchBar value={nameQuery} onChange={setNameQuery} />
+
+        {isMultiSection
+          ? <SectionedGrid
+            group={group}
+            pokemon={pokemon}
+            loading={loading}
+            error={error}
+            caughtIds={caughtIds}
+            onToggleCaught={handleToggleCaught}
+          />
+          : <PokemonGrid
+            pokemon={pokemon}
+            loading={loading}
+            error={error}
+            caughtIds={caughtIds}
+            onToggleCaught={handleToggleCaught}
+            loadMore={loadMore}
+            hasMore={hasMore}
+          />
+        }
 
       </main>
     </div>
   )
 }
 
-
-//Export ─────────────────────────────────────────────
 export default PokedexPage

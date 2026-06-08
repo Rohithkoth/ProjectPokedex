@@ -7,29 +7,14 @@ package com.pokedex.dto;
 //  WHAT THIS FILE IS:
 //  A plain Java class that holds all the filter options a user
 //  can send from the React frontend to the search API.
-//
-//  HOW IT WORKS:
-//  The React frontend will send a GET request with query parameters:
-//    GET /api/pokemon/search?type=fire&generation=1&legendary=true
-//
-//  Spring automatically maps those query params into this object.
-//  Each field here corresponds to one filter the frontend can apply.
-//  All fields are Optional (nullable) — if the frontend doesn't send
-//  a param, that field will just be null and the filter is ignored.
-//
-//  FUTURE USE (checklist feature):
-//  When you add the user checklist feature later, you can add
-//  a "caughtOnly" or "uncaughtOnly" boolean field here and the
-//  frontend can filter the list to show only caught/uncaught Pokémon.
-//
-//  WHAT YOU NEED TO DO IN THIS FILE:
-//  Follow the steps below to add fields and accessor methods.
 // =============================================================
 
 public class PokemonSearchCriteria {
 
     // Declare the filter fields ─────────────────────
-    private String type;
+    private String typeAnd1;
+    private String typeAnd2;
+    private String[] typeOrList;
     private Integer generation;
     private String color;
     private String experienceGroup;
@@ -39,14 +24,44 @@ public class PokemonSearchCriteria {
     private Boolean mega;
     private Boolean paradox;
     private Boolean baseFormOnly;
+    private Boolean excludeMega;
+    private Boolean excludeGmax;
+    private String generationList;
+    private String dexKey;
+    private String name;
 
-    // Add getters and setters ───────────────────────
-    public String getType() {
-        return type;
+    public Boolean getExcludeGmax() {
+        return excludeGmax;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setExcludeGmax(Boolean excludeGmax) {
+        this.excludeGmax = excludeGmax;
+    }
+
+    // Add getters and setters ───────────────────────
+
+    public String getTypeAnd1() {
+        return typeAnd1;
+    }
+
+    public void setTypeAnd1(String typeAnd1) {
+        this.typeAnd1 = typeAnd1;
+    }
+
+    public String getTypeAnd2() {
+        return typeAnd2;
+    }
+
+    public void setTypeAnd2(String typeAnd2) {
+        this.typeAnd2 = typeAnd2;
+    }
+
+    public String[] getTypeOrList() {
+        return typeOrList;
+    }
+
+    public void setTypeOrList(String[] typeOrList) {
+        this.typeOrList = typeOrList;
     }
 
     public Integer getGeneration() {
@@ -120,4 +135,38 @@ public class PokemonSearchCriteria {
     public void setBaseFormOnly(Boolean baseFormOnly) {
         this.baseFormOnly = baseFormOnly;
     }
+
+    public Boolean getExcludeMega() {
+        return excludeMega;
+    }
+
+    public void setExcludeMega(Boolean excludeMega) {
+        this.excludeMega = excludeMega;
+    }
+
+    public String getGenerationList() {
+        return generationList;
+    }
+
+    public void setGenerationList(String generationList) {
+        this.generationList = generationList;
+    }
+
+    public String getDexKey() {
+        return dexKey;
+    }
+
+    public void setDexKey(String dexKey) {
+        this.dexKey = dexKey;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
+
+

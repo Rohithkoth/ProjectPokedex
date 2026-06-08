@@ -2,33 +2,43 @@
    PokedexPage.module.css
 ============================================================= */
 
-
+/* ── Page layout ─────────────────────────────────────────────*/
 .page {
    display: flex;
    min-height: 100vh;
 }
 
-
+/* ── Sidebar ─────────────────────────────────────────────────*/
 .sidebar {
    width: 240px;
    flex-shrink: 0;
 }
 
-
+/* ── Main content area ───────────────────────────────────────*/
 .main {
    flex: 1;
    overflow-y: auto;
 }
 
-
+/* ── Header row (title + result count) ──────────────────────*/
 .header {
-   display: flex;
-   align-items: baseline;
-   justify-content: space-between;
-   padding: 1.5rem 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1.5rem 0;
+  gap: 0.25rem;
+  position: relative;
 }
 
+.headerMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
 
+/* ── Page title ─────────────────────────────────────────────*/
 .title {
    font-family: var(--font-display);
    font-size: 3rem;
@@ -36,9 +46,72 @@
    color: var(--text);
 }
 
-
+/* ── Result count ────────────────────────────────────────────*/
 .count {
    font-size: 0.85rem;
    color: var(--text-muted);
    font-family: var(--font-mono);
+}
+
+/* ── Back button ─────────────────────────────────────────────*/
+.backBtn {
+   background: none;
+   border: none;
+   color: var(--text-muted);
+   cursor: pointer;
+   font-size: 0.85rem;
+   padding: 0;
+}
+
+.backBtn:hover {
+   color: var(--accent);
+}
+
+/* ── Pokemon grid ────────────────────────────────────────────*/
+.grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+   gap: 1rem;
+   padding: 1rem 1.5rem;
+}
+
+/* ── Section divider ─────────────────────────────────────────*/
+.section {
+   margin-bottom: 1rem;
+}
+
+.divider {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   padding: 1.5rem 1.5rem 0.75rem;
+}
+
+.divider::before,
+.divider::after {
+   content: '';
+   flex: 1;
+   height: 1px;
+   background: var(--border);
+}
+
+.dividerLabel {
+   font-family: var(--font-display);
+   font-size: 1.1rem;
+   letter-spacing: 0.05em;
+   color: var(--text-muted);
+   white-space: nowrap;
+}
+
+/* ── Message states ──────────────────────────────────────────*/
+.message {
+   text-align: center;
+   color: var(--text-muted);
+   padding: 4rem;
+}
+
+.error {
+   text-align: center;
+   color: var(--accent);
+   padding: 4rem;
 }

@@ -13,84 +13,85 @@ import java.util.Optional;
 //  PokemonRepository.java  — Data Access Layer
 // =============================================================
 
+
 @Repository
 public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
 
-        // ── Derived Queries───────────────────────
+    Optional<Pokemon> findBySlug(String slug);
 
-        Optional<Pokemon> findBySlug(String slug);
+    // Finds all Pokémon from a specific generation.
+    List<Pokemon> findByGeneration(Integer generation);
 
-        // Finds all Pokémon from a specific generation.
-        List<Pokemon> findByGeneration(Integer generation);
+    // Finds only base forms (form_id = 0).
+    List<Pokemon> findByFormId(Integer formId);
 
-        // Finds only base forms (form_id = 0).
-        // Call with: findByFormId(0)
-        List<Pokemon> findByFormId(Integer formId);
+    // Boolean flag derived queries.
+    List<Pokemon> findByIsLegendaryTrue();
 
-        // Boolean flag derived queries.
-        // "True" suffix generates: WHERE is_legendary = true
-        List<Pokemon> findByIsLegendaryTrue();
+    List<Pokemon> findByIsMythicalTrue();
 
-        List<Pokemon> findByIsMythicalTrue();
+    List<Pokemon> findByIsMegaTrue();
 
-        List<Pokemon> findByIsMegaTrue();
+    List<Pokemon> findByIsParadoxTrue();
 
-        List<Pokemon> findByIsParadoxTrue();
-
-        List<Pokemon> findByHasGigantamaxTrue();
-
-        // ── Native Queries  ────────────────────
-        // QUERY 1: Filter by Pokémon type
-        //
-        // This handles both single-type Pokémon (type2 is null)
-        // and dual-type Pokémon automatically.
-        //
-        // Example: passing "fire" returns Charmander (fire/null)
-        // AND Charizard (fire/flying)
-        //
-        @Query(value = "SELECT * FROM pokemon WHERE type1 = :type or type2 = :type ", nativeQuery = true)
-        List<Pokemon> findByType(@Param("type") String type);
-
-        // QUERY 2: Filter by type AND generation together
-        //
-        // Example: passing "fire", 1 returns only Gen 1 fire types.
-        //
-        @Query(value = "SELECT * FROM pokemon WHERE (type1 = :type or type2 = :type) and generation = :generation  ", nativeQuery = true)
-        List<Pokemon> findByTypeAndGeneration(
-                        @Param("type") String type,
-                        @Param("generation") Integer generation);
+    List<Pokemon> findByHasGigantamaxTrue();
 
 
-        // QUERY 4: The main flexible search query
-        //
-        @Query(value = """
-                        SELECT * FROM pokemon
-                        WHERE
-                            (:type IS NULL or type1 = :type or type2 = :type) and
-                            (:generation is NULL or generation = :generation) and
-                            (:color is NULL or color = :color) and
-                            (:expGroup  is NULL or experience_group  = :expGroup) and 
-                            (:hiddenMove IS NULL OR jsonb_exists(hidden_moves, :hiddenMove)) and
-                            (:legendary is NULL or is_legendary  = :legendary) and 
-                            (:mythical is NULL or is_mythical  = :mythical) and
-                            (:mega is NULL or is_mega  = :mega) and
-                            (:paradox is NULL or  is_paradox  = :paradox) and
-(:baseFormOnly IS NULL OR :baseFormOnly = false OR form_id = 0)
+    // QUERY 1: Filter by Pokémon type
 
+    // QUERY 2: Filter by type AND generation together
 
-                        ORDER BY base_id ASC, form_id ASC
-                        """, nativeQuery = true)
-        List<Pokemon> search(
-                        @Param("type") String type,
-                        @Param("generation") Integer generation,
-                        @Param("color") String color,
-                        @Param("expGroup") String expGroup,
-                        @Param("hiddenMove") String hiddenMove,
-                        @Param("legendary") Boolean legendary,
-                        @Param("mythical") Boolean mythical,
-                        @Param("mega") Boolean mega,
-                        @Param("paradox") Boolean paradox,
-                        @Param("baseFormOnly") Boolean baseFormOnly);
+    // QUERY 3: Filter by hidden move
+
+    // QUERY 4: The main flexible search query
+    @Query(value = """
+                SELECT * FROM pokemon
+                    WHERE
+                    (:typeAnd1 IS NULL OR type1 = :typeAnd1 OR type2 = :typeAnd1) AND
+                    (:typeAnd2 IS NULL OR type1 = :typeAnd2 OR type2 = :typeAnd2) AND
+                    (:typeOrList IS NULL OR type1 = ANY(string_to_array(:typeOrList, ',')) OR type2 = ANY(string_to_array(:typeOrList, ','))) AND
+                    (:generation IS NULL OR generation = :generation) AND
+                    (:generationList IS NULL OR generation = ANY(CAST(string_to_array(:generationList, ',') AS int[])))  and
+                    (:color IS NULL OR color = :color) AND
+                    (:expGroup  is NULL or experience_group  = :expGroup) and
+                    (:hiddenMove IS NULL OR jsonb_exists(hidden_moves, :hiddenMove)) and
+                    (:legendary is NULL or is_legendary  = :legendary) and
+                    (:mythical is NULL or is_mythical  = :mythical) and
+                    (:mega is NULL or is_mega  = :mega) and
+                    (:paradox is NULL or  is_paradox  = :paradox)
+                    AND (:baseFormOnly IS NULL OR :baseFormOnly = false OR form_id = 0
+                        OR form_name IN ('Alolan Form', 'Galarian Form', 'Hisuian Form', 'Paldean Form')
+                        OR is_mega = true
+                        OR form_name = 'Gigantamax Form')
+                    AND (:excludeMega IS NULL OR :excludeMega = false OR is_mega IS NOT TRUE)
+                    AND (:excludeGmax IS NULL OR :excludeGmax = false OR form_name IS NULL OR form_name != 'Gigantamax Form')
+                    AND (:dexKey IS NULL OR EXISTS (
+                    SELECT 1 FROM game_dex gd
+                    WHERE gd.dex_key = :dexKey
+                    AND gd.base_id = pokemon.base_id
+                    AND gd.form_id = pokemon.form_id))
+                    AND (:name IS NULL OR LOWER(name) LIKE LOWER(CONCAT('%', :name, '%')))
+                                    ORDER BY base_id ASC, form_id ASC
+                                    """, nativeQuery = true)
+    // @Param("type") String type,
+    List<Pokemon> search(
+            @Param("typeAnd1") String typeAnd1,
+            @Param("typeAnd2") String typeAnd2,
+            @Param("typeOrList") String typeOrList,
+            @Param("generation") Integer generation,
+            @Param("generationList") String generationList,
+            @Param("color") String color,
+            @Param("expGroup") String expGroup,
+            @Param("hiddenMove") String hiddenMove,
+            @Param("legendary") Boolean legendary,
+            @Param("mythical") Boolean mythical,
+            @Param("mega") Boolean mega,
+            @Param("paradox") Boolean paradox,
+            @Param("baseFormOnly") Boolean baseFormOnly,
+            @Param("excludeMega")  Boolean excludeMega,
+            @Param("excludeGmax")  Boolean excludeGmax,
+            @Param("dexKey") String dexKey,
+            @Param("name") String name);
 }
 
-//todo: change the HM data type
+// todo: change the HM data type

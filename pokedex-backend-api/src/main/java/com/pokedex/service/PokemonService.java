@@ -13,14 +13,19 @@ import java.util.stream.Collectors;
 // =============================================================
 //  PokemonService.java  — Business Logic Layer
 // =============================================================
+//
+//  WHAT THIS FILE IS:
+//  The middle layer between the controller and the repository.
+//  Its job is to:
+//    1. Receive calls from the controller
+//    2. Call the right repository method(s) to get data
+//    3. Convert the raw Pokemon entities into DTOs
+//    4. Return the DTOs to the controller
+// =============================================================
 
 @Service
 @Transactional
 public class PokemonService {
-
-    //  Inject the repository ────────────────────────
-    //
-
     private final PokemonRepository pokemonRepository;
 
     public PokemonService(PokemonRepository pokemonRepository) {
@@ -29,14 +34,12 @@ public class PokemonService {
 
     // =========================================================
     // API 1: Get a single Pokémon by slug
-    // Used by: GET /api/pokemon/{slug}
     // Returns: PokemonDTO.Detail (full data)
     // =========================================================
-
-    //Implement getPokemonBySlug ───────────────────
     //
     @Transactional(readOnly = true)
     public PokemonDTO.Detail getPokemonBySlug(String slug) {
+        // return null; // replace this
         Pokemon foundPokemon = pokemonRepository.findBySlug(slug)
                 .orElseThrow(() -> new RuntimeException("Pokemon not found: " + slug));
         return new PokemonDTO.Detail(foundPokemon);
@@ -44,16 +47,20 @@ public class PokemonService {
 
     // =========================================================
     // API 2: Search / Filter Pokémon
-    // Used by: GET /api/pokemon/search?type=fire&generation=1&...
     // Returns: List<PokemonDTO.Summary> (lightweight list)
     // =========================================================
-
-    //Implement searchPokemon ──────────────────────
+    //
     //
     @Transactional(readOnly = true)
     public List<PokemonDTO.Summary> searchPokemon(PokemonSearchCriteria criteria) {
-        String type = criteria.getType();
+        // String type = criteria.getType();
+        String typeAnd1 = criteria.getTypeAnd1();
+        String typeAnd2 = criteria.getTypeAnd2();
+        String typeOrList = criteria.getTypeOrList() != null
+                ? String.join(",", criteria.getTypeOrList())
+                : null;
         Integer generation = criteria.getGeneration();
+        String generationList = criteria.getGenerationList();
         String color = criteria.getColor();
         String experienceGroup = criteria.getExperienceGroup();
         String hiddenMove = criteria.getHiddenMove();
@@ -62,11 +69,17 @@ public class PokemonService {
         Boolean mega = criteria.getMega();
         Boolean paradox = criteria.getParadox();
         Boolean baseFormOnly = criteria.getBaseFormOnly();
+        Boolean excludeMega = criteria.getExcludeMega();
+        Boolean excludeGmax = criteria.getExcludeGmax();
+        String dexKey = criteria.getDexKey();
+        String name = criteria.getName();
 
-        //call the repository search method
         List<Pokemon> pokemonList = pokemonRepository.search(
-                type,
+                typeAnd1,
+                typeAnd2,
+                typeOrList,
                 generation,
+                generationList,
                 color,
                 experienceGroup,
                 hiddenMove,
@@ -74,7 +87,11 @@ public class PokemonService {
                 mythical,
                 mega,
                 paradox,
-                baseFormOnly);
+                baseFormOnly,
+                excludeMega,
+                excludeGmax,
+                dexKey,
+                name);
 
         // return null; // replace this
         return pokemonList.stream().map(PokemonDTO.Summary::new).collect(Collectors.toList());

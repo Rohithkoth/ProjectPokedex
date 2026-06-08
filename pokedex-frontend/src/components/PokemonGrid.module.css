@@ -10,7 +10,7 @@
    padding: 1rem;
 }
 
-
+/*Message states ───────────────────────────────────*/
 .message {
    text-align: center;
    color: var(--text-muted);
@@ -18,9 +18,14 @@
    grid-column: 1 / -1;
 }
 
-
+/*Error state ──────────────────────────────────────*/
 .error {
    color: var(--accent);
    text-align: center;
    padding: 4rem;
+}
+
+.sentinel {
+    height: 1px;
+    width: 100%;
 }
