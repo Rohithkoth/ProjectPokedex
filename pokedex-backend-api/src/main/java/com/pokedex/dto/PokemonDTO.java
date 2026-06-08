@@ -25,13 +25,7 @@ import com.pokedex.model.Pokemon;
 //    The React frontend will use this to render a full Pokémon
 //    profile page with all stats, moves, egg groups, etc.
 //
-//  FUTURE USE (checklist feature):
-//  When you add the checklist, you can add a boolean "isCaught"
-//  field to Summary so each card knows whether to show a
-//  caught/uncaught indicator. The service layer will look up
-//  the user's caught list and set this field before returning.
-//
-// 
+// =============================================================
 
 public class PokemonDTO {
 
@@ -40,8 +34,9 @@ public class PokemonDTO {
     // Used for: GET /api/pokemon/search (list of results)
     // =========================================================
     public static class Summary {
-
-        // Declare fields ────────────────────────────
+        //  Declare fields ────────────────────────────
+        // These flags let the frontend show special icons/badges on cards.
+        //
         private Long id;
         private Integer baseId;
         private Integer formId;
@@ -58,17 +53,12 @@ public class PokemonDTO {
         private Boolean isParadox;
         private Boolean hasGigantamax;
 
-
+        //No-args constructor ───────────────────────    
+        //
         public Summary() {
         }
 
-        // Mapping constructor ───────────────────────
-        //
-        //
-        // This is how we convert from entity → DTO in the service layer.
-        // You'll call it like: new PokemonDTO.Summary(pokemonEntity)
-        //
-        //
+        //Mapping constructor ───────────────────────
         public Summary(Pokemon p) {
             this.id = p.getId();
             this.baseId = p.getBaseId();
@@ -87,12 +77,7 @@ public class PokemonDTO {
             this.hasGigantamax = p.getHasGigantamax();
         }
 
-        //  Getters ───────────────────────────────────
-        //
-        // DTOs don't need setters — they are read-only response objects.
-        // Jackson (Spring's JSON library) uses the getters to serialize
-        // this object to JSON when it's returned from a controller.
-
+        //Getters ───────────────────────────────────
         public Long getId() {
             return id;
         }
@@ -161,10 +146,7 @@ public class PokemonDTO {
     // =========================================================
     public static class Detail {
 
-        //Declare fields ────────────────────────────
-        //
-        // The frontend can use JSON.parse() on evolutionIds and hiddenMoves
-        // to turn them back into JavaScript arrays/objects.
+        // Declare fields ────────────────────────────
         //
         private Long id;
         private Integer baseId;
@@ -195,12 +177,13 @@ public class PokemonDTO {
         private Boolean isBattleOnly;
         private Boolean isSublegendary;
 
-        //No-args constructor ───────────────────────
+        // No-args constructor ───────────────────────
         //
         public Detail() {
         }
 
         // Mapping constructor ───────────────────────
+        //
         //
         public Detail(Pokemon p) {
             // Summary fields

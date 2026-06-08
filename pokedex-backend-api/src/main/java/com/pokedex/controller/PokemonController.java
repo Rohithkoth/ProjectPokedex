@@ -11,21 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 // import org.springframework.web.bind.annotation.RequestParam;
 // import org.springframework.web.service.annotation.GetExchange;
 
-
-
 // =============================================================
 //  PokemonController.java  — HTTP Layer (Two APIs)
 // =============================================================
-//
-//  WHAT THIS FILE IS:
-//  The entry point for all incoming HTTP requests.
-//  Its only job is to:
-//    1. Receive a request and extract the parameters
-//    2. Call the right service method
-//    3. Return the result as a JSON HTTP response
-//
-//  Controllers should be thin — no business logic, no DB calls.
-//  All of that lives in the service and repository layers.
 //
 //  THIS FILE DEFINES TWO APIS:
 //
@@ -44,18 +32,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 //             GET /api/pokemon/search?hiddenMove=surf&baseFormOnly=true
 //             GET /api/pokemon/search              ← returns all Pokémon
 //
-//  REACT FRONTEND USAGE (future reference):
-//  Your React app will call these with axios like:
-//
-//    // Single Pokémon
-//    const res = await axios.get(`/api/pokemon/${slug}`);
-//
-//    // Search with filters (build params from UI state)
-//    const res = await axios.get('/api/pokemon/search', {
-//      params: { type: 'fire', generation: 1 }
-//    });
-//    // axios automatically builds: /api/pokemon/search?type=fire&generation=1
-//
 //  ANNOTATIONS REFERENCE:
 //  @RestController       — all methods return JSON automatically
 //  @RequestMapping       — base URL prefix for all methods in this class
@@ -71,6 +47,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @CrossOrigin(origins = "http://localhost:5173")
 public class PokemonController {
 
+    // Inject the service ────────────────────────────
+
     private final PokemonService pokemonService;
 
     public PokemonController(PokemonService pokemonService){
@@ -78,7 +56,7 @@ public class PokemonController {
     }
 
     // =========================================================
-    //  API 1: GET /api/pokemon/{slug}
+    //  GET /api/pokemon/{slug}
     //  Returns: full PokemonDTO.Detail as JSON
     //
     //  Examples:
@@ -87,6 +65,7 @@ public class PokemonController {
     //    GET /api/pokemon/eevee
     // =========================================================
 
+    // Implement the single Pokémon endpoint ─────────
     //
     @GetMapping("/{slug}")
     public ResponseEntity<PokemonDTO.Detail> getPokemonBySlug( @PathVariable String slug){
@@ -96,7 +75,7 @@ public class PokemonController {
     
 
     // =========================================================
-    //  API 2: GET /api/pokemon/search
+    //  GET /api/pokemon/search
     //  Returns: list of PokemonDTO.Summary as JSON
     //
     //  All query params are optional. Mix and match freely:
@@ -118,8 +97,8 @@ public class PokemonController {
 
     // Implement the search endpoint ─────────────────
     //
- 
-    //
+
+
     @GetMapping("/search")
     public ResponseEntity<List<PokemonDTO.Summary>> searchPokemon(
         @ModelAttribute PokemonSearchCriteria criteria
@@ -129,10 +108,13 @@ public class PokemonController {
     }
     
 
-    // Error handler ─────────────────────────────────
+    //Error handler ─────────────────────────────────
     // When getPokemonBySlug can't find a Pokémon, the service throws
     // a RuntimeException. Without this handler, Spring would return
     // a generic 500 error. This catches it and returns a proper 404.
+    // After adding this, hitting /api/pokemon/fakemon will return:
+    //   HTTP 404
+    //   Body: "Pokemon not found: fakemon"
     //
     // Your React frontend can check for 404 and show a "Not found" message.
     //

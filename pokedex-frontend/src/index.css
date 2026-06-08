@@ -1,0 +1,61 @@
+/* =============================================================
+   index.css — Global styles and design tokens
+   All colors, fonts, and spacing live here as CSS variables.
+   Components reference these variables so the whole app stays
+   visually consistent.
+============================================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* ── Colors ─────────────────────────────────────────────── */
+  --bg:          #0f0f13;       /* page background */
+  --surface:     #1a1a24;       /* card/panel background */
+  --surface-2:   #22222f;       /* slightly lighter surface */
+  --border:      #2e2e3f;       /* subtle borders */
+  --border-hover:#4a4a6a;       /* border on hover */
+
+  --accent:      #e63946;       /* Pokémon red — primary accent */
+  --accent-dim:  rgba(230, 57, 70, 0.15);
+  --accent-2:    #4cc9f0;       /* electric blue — secondary accent */
+
+  --text:        #f0f0f8;       /* primary text */
+  --text-muted:  #8888aa;       /* secondary/label text */
+  --text-dim:    #55556a;       /* disabled/placeholder text */
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-display: 'Bebas Neue', sans-serif;   /* headings */
+  --font-body:    'Inter', sans-serif;         /* body text */
+  --font-mono:    'DM Mono', monospace;        /* IDs, numbers */
+
+  /* ── Spacing ─────────────────────────────────────────────── */
+  --radius:     8px;
+  --radius-lg:  14px;
+
+  /* ── Transitions ─────────────────────────────────────────── */
+  --transition: 150ms ease;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }

@@ -21,11 +21,14 @@ package com.pokedex.dto;
 //  When you add the user checklist feature later, you can add
 //  a "caughtOnly" or "uncaughtOnly" boolean field here and the
 //  frontend can filter the list to show only caught/uncaught Pokémon.
-
+//
+//  WHAT YOU NEED TO DO IN THIS FILE:
+//  Follow the steps below to add fields and accessor methods.
+// =============================================================
 
 public class PokemonSearchCriteria {
 
-    //Declare the filter fields ─────────────────────
+    // Declare the filter fields ─────────────────────
     private String type;
     private Integer generation;
     private String color;
@@ -37,14 +40,7 @@ public class PokemonSearchCriteria {
     private Boolean paradox;
     private Boolean baseFormOnly;
 
-    //Add getters and setters ───────────────────────
-
-    // Spring needs the setters to inject the query param values
-    // into this object when a request comes in.
-    //
-    // Spring needs the getters so the service layer can read
-    // the values and build the right DB query.
-
+    // Add getters and setters ───────────────────────
     public String getType() {
         return type;
     }
@@ -125,27 +121,3 @@ public class PokemonSearchCriteria {
         this.baseFormOnly = baseFormOnly;
     }
 }
-
-
-// URL arrives:
-// ?type=fire&generation=1&legendary=true
-//         ↓
-// Spring creates empty PokemonSearchCriteria
-//         ↓
-// Spring calls setters:
-//   criteria.setType("fire")
-//   criteria.setGeneration(1)
-//   criteria.setLegendary(true)
-//   // mythical, mega, paradox, baseFormOnly stay null
-//         ↓
-// Spring passes criteria to controller method
-//         ↓
-// Service calls getters:
-//   criteria.getType()        → "fire"
-//   criteria.getGeneration()  → 1
-//   criteria.getLegendary()   → true
-//   criteria.getMythical()    → null  ← filter ignored in SQL
-//         ↓
-// Repository search() called with extracted values
-//         ↓
-// SQL runs with IS NULL checks handling the nulls gracefully

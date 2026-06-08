@@ -1,0 +1,26 @@
+/* =============================================================
+   PokemonGrid.module.css
+============================================================= */
+
+/* Grid layout ──────────────────────────────────────*/
+.grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+   gap: 1rem;
+   padding: 1rem;
+}
+
+
+.message {
+   text-align: center;
+   color: var(--text-muted);
+   padding: 4rem;
+   grid-column: 1 / -1;
+}
+
+
+.error {
+   color: var(--accent);
+   text-align: center;
+   padding: 4rem;
+}

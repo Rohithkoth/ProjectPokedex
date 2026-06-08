@@ -7,12 +7,6 @@ import org.hibernate.annotations.Type;
 // =============================================================
 //  Pokemon.java  — The Entity (Model)
 // =============================================================
-//
-//  WHAT THIS FILE IS:
-//  A Java class that maps directly to the "pokemon" table in your
-//  PostgreSQL database. Each field below = one column in that table.
-//  Hibernate uses this class to read rows from the DB and turn them
-//  into Java objects your code can work with.
 // =============================================================
 
 @Entity
@@ -20,13 +14,13 @@ import org.hibernate.annotations.Type;
 public class Pokemon {
 
     // Primary Key ───────────────────────────────────
-
+    //
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Simple integer/string columns ─────────────────
-
+    //Simple integer/string columns ─────────────────
+    //
 
     @Column(name = "base_id")
     private Integer baseId;
@@ -49,11 +43,6 @@ public class Pokemon {
     private Integer genderRatio;
 
 // Flat type, egg group and gender columns ───────
-//
-// Since each Pokémon has at most 2 types, 2 egg groups, and
-// 2 gender codes, we use plain String columns instead of arrays.
-// type2, eggGroup2, and gender2 are nullable — they will be
-// null when a Pokémon only has one value.
 
     // Types
     @Column(name = "type1")
@@ -73,11 +62,8 @@ public class Pokemon {
     @Column(name = "gender_2")
     private String gender2;
 
-    //JSONB columns ─────────────────────────────────
+    // JSONB columns ─────────────────────────────────
     //
-    // We store these as String for simplicity. The JSON content
-    // will come back as a raw string like: "[[2,0],[3,0]]"
-    // The React frontend can parse that with JSON.parse().
 
     @Type(JsonBinaryType.class)
     @Column(name = "evolution_ids", columnDefinition = "jsonb")
@@ -87,10 +73,7 @@ public class Pokemon {
     @Column(name = "hidden_moves", columnDefinition = "jsonb")
     private String hiddenMoves; // DB column: hidden_moves → e.g. {"surf":[1,2,3]}
 
-    // Boolean flag columns ─────────────────────────
-    // DB column names:
-    // is_mega, is_battle_only, has_gigantamax,
-    // is_legendary, is_mythical, is_sublegendary, is_paradox
+    //Boolean flag columns ─────────────────────────
     //
 
     @Column(name = "is_mega")
@@ -114,13 +97,15 @@ public class Pokemon {
     @Column(name = "is_paradox")
     private Boolean isParadox;
 
-    // No-args constructor ───────────────────────────
+    //No-args constructor ───────────────────────────
+    //
 
 
     public Pokemon() {
     }
 
     //Getters and Setters ───────────────────────────
+    //
 
     public Long getId() {
         return id;
@@ -210,7 +195,7 @@ public class Pokemon {
         this.genderRatio = genderRatio;
     }
 
-    // ✅ type1 and type2
+    //  type1 and type2
     public String getType1() {
         return type1;
     }
@@ -227,7 +212,7 @@ public class Pokemon {
         this.type2 = type2;
     }
 
-    // ✅ egg groups
+    //  egg groups
     public String getEggGroup1() {
         return eggGroup1;
     }
@@ -244,7 +229,7 @@ public class Pokemon {
         this.eggGroup2 = eggGroup2;
     }
 
-    // ✅ gender
+    // gender
     public String getGender1() {
         return gender1;
     }

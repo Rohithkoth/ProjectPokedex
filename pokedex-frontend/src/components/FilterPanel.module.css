@@ -1,0 +1,96 @@
+/* =============================================================
+   FilterPanel.module.css
+============================================================= */
+
+/* ── Panel container ─────────────────────────────────────────
+*/
+.panel {
+   background: var(--surface);
+   border-right: 1px solid var(--border);
+   padding: 1.5rem;
+   width: 240px;
+   min-height: 100vh;
+   overflow-y: auto;
+}
+
+/* ── Header row (title + clear button) ───────────────────────
+*/
+.header {
+   display: flex;
+   justify-content: space-between;
+}
+
+/* ── Panel title ─────────────────────────────────────────────
+*/
+.title {
+   font-family: var(--font-display);
+   font-size: 1.8rem;
+   letter-spacing: 0.05em;
+}
+
+/* ── Clear all button ────────────────────────────────────────
+*/
+.clearBtn {
+   background: none;
+   border: none;
+   color: var(--text-muted);
+   cursor: pointer;
+   font-size: 0.8rem;
+
+
+}
+
+.clearBtn:hover {
+  color: var(--accent);
+}
+
+/* ── Filter group (label + input) ────────────────────────────
+*/
+.group {
+   display: flex;
+   flex-direction: column;
+   gap: 0.4rem;
+   margin-top: 1.5rem;
+
+}
+
+/* ── Filter label ────────────────────────────────────────────
+*/
+.label {
+   font-size: 0.7rem;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   color: var(--text-muted);
+
+}
+
+/* ── Text/number inputs ──────────────────────────────────────
+*/
+.input {
+   width: 100%;
+   background: var(--surface-2);
+   border: 1px solid var(--border);
+   border-radius: var(--radius);
+   color: var(--text);
+   padding: 0.5rem 0.75rem;
+   font-size: 0.9rem;
+
+   &:focus {
+     outline: none;
+     border-color: var(--accent);
+   }
+
+}
+
+/* ── Checkbox label row ──────────────────────────────────────
+*/
+.checkLabel {
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+   cursor: pointer;
+   color: var(--text);
+   font-size: 0.9rem;
+   margin-top: 0.75rem;
+
+}

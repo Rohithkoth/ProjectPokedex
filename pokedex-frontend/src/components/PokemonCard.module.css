@@ -1,0 +1,89 @@
+/* =============================================================
+   PokemonCard.module.css — Card Styles
+   
+   WHAT ARE CSS MODULES?
+   A CSS module is a CSS file where all class names are scoped
+   to the component that imports it. This means .card here
+   won't conflict with a .card class in another component.
+   
+   In JSX you use them like:
+     import styles from './PokemonCard.module.css'
+     <div className={styles.card}>
+   
+   The build tool transforms .card into a unique name like
+   PokemonCard_card__xK2p so there are never naming conflicts.
+============================================================= */
+
+/* Card container ───────────────────────────────────*/
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+}
+
+
+.name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+
+.formName {
+     font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 0.1rem;
+}
+
+/* Type badges row ──────────────────────────────────*/
+.types {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/*Individual type badge ───────────────────────────*/
+.typeBadge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+  text-transform: capitalize;
+}
+
+/*Generation label ────────────────────────────────*/
+.generation {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* Special flag badges ─────────────────────────────*/
+.flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.flag {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}  

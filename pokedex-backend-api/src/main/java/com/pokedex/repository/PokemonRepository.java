@@ -12,57 +12,12 @@ import java.util.Optional;
 // =============================================================
 //  PokemonRepository.java  — Data Access Layer
 // =============================================================
-//
-//  WHAT THIS FILE IS:
-//  The only layer that talks directly to the database.
-//  By extending JpaRepository, Spring Data generates all the
-//  boilerplate SQL for common operations automatically.
-//
-//  YOU GET THESE METHODS FOR FREE (no code needed):
-//    findAll()           → SELECT * FROM pokemon
-//    findById(Long id)   → SELECT * FROM pokemon WHERE id = ?
-//    count()             → SELECT COUNT(*) FROM pokemon
-//    existsById(Long id) → SELECT EXISTS(...)
-//    save(Pokemon p)     → INSERT or UPDATE
-//    deleteById(Long id) → DELETE
-//
-//  TWO TYPES OF QUERIES YOU'LL WRITE:
-//
-//  1. DERIVED QUERIES — Spring reads the method name and generates
-//     the SQL automatically. No @Query annotation needed.
-//     Rule: findBy + FieldName + [Condition]
-//     Examples:
-//       findBySlug(String slug)       → WHERE slug = ?
-//       findByGeneration(Integer gen) → WHERE generation = ?
-//       findByIsLegendaryTrue()       → WHERE is_legendary = true
-//
-//  2. NATIVE QUERIES — You write the SQL yourself using @Query.
-//     Required for cases where derived queries can't express the
-//     logic — like checking two columns with OR, or querying JSONB.
-//     nativeQuery = true means use real SQL, not JPQL.
-//
-//  V3 SCHEMA REMINDER:
-//  We switched from TEXT[] arrays to flat columns.
-//  The relevant columns are now:
-//    type1       TEXT  NOT NULL   ← primary type e.g. "fire"
-//    type2       TEXT             ← secondary type, NULL if single type
-//    egg_group_1 TEXT  NOT NULL
-//    egg_group_2 TEXT
-//    gender_1    TEXT  NOT NULL
-//    gender_2    TEXT
-//  This means NO more ANY() operator for type queries.
-//  Type filtering is now simple equality: type1 = :type OR type2 = :type
-// =============================================================
 
 @Repository
 public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
 
-        // ── Derived Queries (no SQL needed) ───────────────────────
-        // Spring generates these automatically from the method name.
-        // These have not changed from the original skeleton.
+        // ── Derived Queries───────────────────────
 
-        // Finds one Pokémon by its slug. Returns Optional because it
-        // might not exist — the service layer handles the not-found case.
         Optional<Pokemon> findBySlug(String slug);
 
         // Finds all Pokémon from a specific generation.
@@ -84,11 +39,8 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
 
         List<Pokemon> findByHasGigantamaxTrue();
 
-        // ── Native Queries ────────────────────
-
+        // ── Native Queries  ────────────────────
         // QUERY 1: Filter by Pokémon type
-        // The SQL you need:
-        // WHERE type1 = :type OR type2 = :type
         //
         // This handles both single-type Pokémon (type2 is null)
         // and dual-type Pokémon automatically.
@@ -100,14 +52,6 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
         List<Pokemon> findByType(@Param("type") String type);
 
         // QUERY 2: Filter by type AND generation together
-        // Combine both conditions with AND:
-        // WHERE (type1 = :type OR type2 = :type) AND generation = :generation
-        // Note the parentheses around the type check — they are important.
-        // Without them AND binds tighter than OR and the logic breaks:
-        // type1 = :type OR type2 = :type AND generation = :generation
-        // reads as:
-        // type1 = :type OR (type2 = :type AND generation = :generation)
-        // ← WRONG — would return all type1 matches regardless of generation
         //
         // Example: passing "fire", 1 returns only Gen 1 fire types.
         //
@@ -116,15 +60,9 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
                         @Param("type") String type,
                         @Param("generation") Integer generation);
 
-        // QUERY 3: Filter by hidden move
-
-        // NO CHANGE from original — hidden_moves is still a JSONB column.
-        // Its structure is: { "surf": [1,2,3], "fly": [2,3,4] }
-        //
-        // Example: passing "surf" returns all Pokémon that can learn Surf.
-        //
 
         // QUERY 4: The main flexible search query
+        //
         @Query(value = """
                         SELECT * FROM pokemon
                         WHERE
